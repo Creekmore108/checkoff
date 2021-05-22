@@ -17,6 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middelware' => 'is_admin'], function() {
+        Route::resource('pages', \App\Http\Controllers\Admin\PageController::class );
+    });
+
+});
