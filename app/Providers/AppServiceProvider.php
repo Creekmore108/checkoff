@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Http\View\Composers\MenuComposer;
+use Illuminate\Pagination\Paginator as PaginationPaginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        PaginationPaginator::useBootstrap();
+        View::composer('partials.sidebar', MenuComposer::class);
     }
 }
